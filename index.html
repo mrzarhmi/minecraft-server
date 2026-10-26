@@ -41,65 +41,190 @@
         <div class="aura-orb orb-cyan"></div>
     </div>
 
-    <!-- Header Navigation -->
-    <header class="mc-header" id="mc-header">
-        <div class="header-container">
-            <!-- Brand & Back Button -->
-            <div class="header-brand-group">
-                <a href="https://mrzarhmi.github.io/" class="portal-back-btn"
-                    title="Back to Mirza Rahimi Portal Gateway" aria-label="Back to Portal Gateway">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                    <span class="back-text">Portal Hub</span>
-                </a>
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-progress" aria-hidden="true"></div>
 
-                <div class="brand-divider" aria-hidden="true"></div>
+    <!-- Mobile Top Header Bar -->
+    <header class="mobile-top-bar" id="mobile-top-bar">
+        <a href="index.html" class="brand-logo" aria-label="Mija's Minecraft SMP">
+            Mija's <span>SMP</span>
+        </a>
 
-                <a href="index.html" class="mc-brand" aria-label="Mija's Minecraft Servers Home">
-                    <span class="brand-icon">⛏️</span>
-                    <div class="brand-info">
-                        <span class="brand-title">Mija's SMP</span>
-                        <span class="brand-tag">MINECRAFT NETWORK</span>
-                    </div>
-                </a>
-            </div>
+        <div class="mobile-actions">
+            <!-- Mobile Live Server Status Pill -->
+            <a href="#status" class="header-status-pill checking" id="header-status-pill"
+                title="View Real-Time Server Status" aria-label="View real-time server status">
+                <span id="header-dot" class="status-ping"></span>
+                <span id="header-status-text" class="status-text">Checking...</span>
+                <span id="header-player-count" class="player-count-badge"></span>
+            </a>
 
-            <!-- Navigation Links -->
-            <nav class="mc-nav" aria-label="Server sections navigation">
-                <a href="#status" class="nav-link">Server Status</a>
-                <a href="#modpack-guide" class="nav-link">Modpack Setup</a>
-                <a href="#how-to-join" class="nav-link">How to Join</a>
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#rules" class="nav-link">Rules</a>
-            </nav>
+            <!-- Mobile Theme Toggle -->
+            <button id="mobile-theme-toggle" class="icon-btn" aria-label="Toggle Dark / Light Theme"
+                title="Switch Theme">
+                <span id="mobile-theme-icon" aria-hidden="true">☀️</span>
+            </button>
 
-            <!-- Header Controls & Live Pill -->
-            <div class="header-actions">
-                <!-- Live Server Status Mini Pill (Redirects to Live Status Dashboard) -->
-                <a href="#status" class="header-status-pill checking" id="header-status-pill"
-                    title="View Real-Time Server Status" aria-label="View real-time server status">
-                    <span id="header-dot" class="status-ping"></span>
-                    <span id="header-status-text" class="status-text">Checking...</span>
-                    <span id="header-player-count" class="player-count-badge"></span>
-                </a>
-
-                <!-- Sound FX Toggle -->
-                <button id="sound-toggle" class="control-btn" aria-label="Toggle UI Sound Effects"
-                    title="Toggle Sound Effects">
-                    <span id="sound-icon" class="control-icon" aria-hidden="true">🔊</span>
-                </button>
-
-                <!-- Theme Toggle -->
-                <button id="theme-toggle" class="control-btn" aria-label="Toggle Dark / Light Theme"
-                    title="Switch Theme">
-                    <span id="theme-icon" class="control-icon" aria-hidden="true">☀️</span>
-                </button>
-            </div>
+            <!-- Hamburger Drawer Button -->
+            <button class="hamburger-btn" id="sidebar-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false"
+                aria-controls="site-sidebar">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
         </div>
     </header>
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+    <!-- Left Sidebar Navigation -->
+    <aside class="site-sidebar" id="site-sidebar" aria-label="Primary Navigation">
+        <div class="sidebar-inner">
+            <!-- Brand & Profile Section -->
+            <div class="sidebar-brand-section">
+                <div class="sidebar-header-top">
+                    <div class="sidebar-avatar-wrapper">
+                        <div class="sidebar-avatar" title="Mija's Minecraft SMP">
+                            <span class="avatar-monogram">M</span>
+                        </div>
+                        <div class="status-indicator" id="sidebar-status-indicator" title="Server Status: Checking...">
+                            <span class="status-pulse" id="sidebar-status-pulse"></span>
+                            <span class="status-dot" id="sidebar-status-dot"></span>
+                        </div>
+                    </div>
+                    <button class="sidebar-close-btn" id="sidebar-close-btn"
+                        aria-label="Close navigation menu">&times;</button>
+                </div>
+
+                <div class="sidebar-brand-text">
+                    <a href="index.html" class="brand-logo">Mija's <span>SMP</span></a>
+                    <h2 class="sidebar-name">Mirza Rahimi</h2>
+                    <p class="sidebar-role">Dedicated Minecraft Network &bull; Paper 26.3</p>
+                </div>
+            </div>
+
+            <!-- Sidebar Navigation Menu -->
+            <nav class="nav-menu" aria-label="Server sections navigation">
+                <ul class="nav-list">
+                    <li>
+                        <a href="#status" class="nav-link" id="nav-link-status">
+                            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                aria-hidden="true">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                            <span>Server Status</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#modpack-guide" class="nav-link" id="nav-link-modpack">
+                            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                aria-hidden="true">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                </path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                            <span>Modpack Setup</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#how-to-join" class="nav-link" id="nav-link-join">
+                            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                            </svg>
+                            <span>How to Join</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#features" class="nav-link" id="nav-link-features">
+                            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                aria-hidden="true">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                </polygon>
+                            </svg>
+                            <span>Features</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#rules" class="nav-link" id="nav-link-rules">
+                            <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                aria-hidden="true">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            <span>Rules</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Sidebar Footer Controls & Links -->
+            <div class="sidebar-footer">
+                <!-- Theme Toggle Button -->
+                <button class="sidebar-theme-btn" id="theme-toggle" type="button" aria-label="Toggle Dark / Light Theme"
+                    title="Switch Theme">
+                    <span class="theme-btn-content">
+                        <span class="theme-icon-symbol" id="theme-icon" aria-hidden="true">☀️</span>
+                        <span id="theme-text-label">Dark Theme</span>
+                    </span>
+                    <span class="theme-badge" id="theme-badge">Active</span>
+                </button>
+
+                <!-- Sound FX Toggle Button -->
+                <button class="sidebar-theme-btn" id="sound-toggle" type="button" aria-label="Toggle Sound Effects"
+                    title="Toggle Sound Effects">
+                    <span class="theme-btn-content">
+                        <span class="theme-icon-symbol" id="sound-icon" aria-hidden="true">🔊</span>
+                        <span id="sound-text-label">Sound FX</span>
+                    </span>
+                    <span class="theme-badge" id="sound-badge">On</span>
+                </button>
+
+                <div class="sidebar-meta">
+                    <div class="sidebar-socials">
+                        <a href="https://mrzarhmi.github.io/" class="sidebar-social-link" title="Portal Gateway"
+                            aria-label="Mirza Rahimi Portal Gateway">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                        </a>
+                        <a href="https://mrzarhmi.github.io/online-portfolio" class="sidebar-social-link"
+                            title="Online Portfolio" aria-label="Mirza Rahimi Portfolio">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path
+                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="https://github.com/mrzarhmi" target="_blank" rel="noopener noreferrer"
+                            class="sidebar-social-link" title="GitHub Profile" aria-label="Mirza Rahimi GitHub">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                    <span class="sidebar-location-badge">mija.ddns.net</span>
+                </div>
+            </div>
+        </div>
+    </aside>
 
     <!-- Main Content Area -->
     <main class="mc-main" id="main-content">
@@ -454,7 +579,8 @@
                             </div>
                         </div>
                         <p class="t-step-desc">
-                            Download the official server modpack archive from our Google Drive repository. The ZIP contains
+                            Download the official server modpack archive from our Google Drive repository. The ZIP
+                            contains
                             all required mod files, shaders, configuration profiles, and the automated batch installer.
                         </p>
 
@@ -462,13 +588,15 @@
                             <div class="download-info">
                                 <div class="download-icon-box">📦</div>
                                 <div>
-                                    <div class="download-filename">Mija_SMP_Modpack_Installer.zip</div>
-                                    <div class="download-details">Google Drive Package &bull; Contains INSTALL MODPACK.bat</div>
+                                    <div class="download-filename">GudangSMP [26.3].7z</div>
+                                    <div class="download-details">Google Drive Package &bull; Contains INSTALL
+                                        MODPACK.bat</div>
                                 </div>
                             </div>
                             <div class="download-actions">
-                                <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer"
-                                    class="btn-gdrive-download" id="legacy-download-btn">
+                                <a href="https://drive.google.com/file/d/1-fr0VhHnuGNrGfDk2Vrz7xk8TN9DDGKA/view?usp=drive_link"
+                                    target="_blank" rel="noopener noreferrer" class="btn-gdrive-download"
+                                    id="legacy-download-btn">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -491,7 +619,8 @@
                             </div>
                         </div>
                         <p class="t-step-desc">
-                            Once the ZIP file is downloaded, right-click and extract it using Windows Explorer, 7-Zip, or
+                            Once the ZIP file is downloaded, right-click and extract it using Windows Explorer, 7-Zip,
+                            or
                             WinRAR. Open the extracted folder and double-click to execute:
                         </p>
 
@@ -514,7 +643,8 @@
                             <div class="screenshot-frame" data-screenshot="assets/tutorial/legacy-step4-batch.png"
                                 data-caption="Extract the ZIP archive and run INSTALL MODPACK.bat">
                                 <img src="assets/tutorial/legacy-step4-batch.png"
-                                    alt="Extracted folder with INSTALL MODPACK.bat" class="screenshot-img" loading="lazy"
+                                    alt="Extracted folder with INSTALL MODPACK.bat" class="screenshot-img"
+                                    loading="lazy"
                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                 <div class="screenshot-placeholder" style="display:none;">
                                     <span class="placeholder-icon">⚡</span>
@@ -540,8 +670,10 @@
                             </div>
                         </div>
                         <p class="t-step-desc">
-                            Reopen Legacy Launcher. From the version dropdown list, select the newly installed <strong>Mija
-                                SMP Modpack</strong> profile and click <strong>Play</strong>. Once in the main menu, go to
+                            Reopen Legacy Launcher. From the version dropdown list, select the newly installed
+                            <strong>Mija
+                                SMP Modpack</strong> profile and click <strong>Play</strong>. Once in the main menu, go
+                            to
                             <strong>Multiplayer</strong> and connect:
                         </p>
 
@@ -604,8 +736,7 @@
                             </a>
                         </div>
                         <div class="t-step-media">
-                            <div class="screenshot-frame"
-                                data-screenshot="assets/tutorial/curseforge-step1-search.png"
+                            <div class="screenshot-frame" data-screenshot="assets/tutorial/curseforge-step1-search.png"
                                 data-caption="CurseForge App Minecraft Tab &amp; Modpack Installation">
                                 <img src="assets/tutorial/curseforge-step1-search.png"
                                     alt="CurseForge modpack search and install" class="screenshot-img" loading="lazy"
@@ -613,7 +744,8 @@
                                 <div class="screenshot-placeholder" style="display:none;">
                                     <span class="placeholder-icon">🔥</span>
                                     <span class="placeholder-title">CurseForge Modpack Library</span>
-                                    <span class="placeholder-sub">Install the base modpack profile inside CurseForge</span>
+                                    <span class="placeholder-sub">Install the base modpack profile inside
+                                        CurseForge</span>
                                 </div>
                                 <div class="screenshot-overlay">
                                     <span class="zoom-icon">🔍</span>
@@ -633,7 +765,8 @@
                             </div>
                         </div>
                         <p class="t-step-desc">
-                            Because stock CurseForge does not include our server-exclusive additions (custom balance mods,
+                            Because stock CurseForge does not include our server-exclusive additions (custom balance
+                            mods,
                             voice chat integration, and optimization patches), download our Extra Mods ZIP archive from
                             Google Drive:
                         </p>
@@ -642,14 +775,15 @@
                             <div class="download-info">
                                 <div class="download-icon-box">🧩</div>
                                 <div>
-                                    <div class="download-filename">Mija_SMP_Extra_Mods.zip</div>
+                                    <div class="download-filename">GudangSMP [26.3] - CurseForge.7z</div>
                                     <div class="download-details">Google Drive Package &bull; Additional custom mods for
                                         CurseForge</div>
                                 </div>
                             </div>
                             <div class="download-actions">
-                                <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer"
-                                    class="btn-gdrive-download" id="curseforge-download-btn">
+                                <a href="https://drive.google.com/file/d/17A4gkMuR_p_19_2K2VqSm6zZlAGNuKR5/view?usp=drive_link"
+                                    target="_blank" rel="noopener noreferrer" class="btn-gdrive-download"
+                                    id="curseforge-download-btn">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -672,7 +806,8 @@
                             </div>
                         </div>
                         <p class="t-step-desc">
-                            In CurseForge, right-click on your installed modpack profile card (or click the three vertical
+                            In CurseForge, right-click on your installed modpack profile card (or click the three
+                            vertical
                             dots <strong>⋮</strong> menu next to the "Play" button), then select <strong>"Open
                                 Folder"</strong>.
                         </p>
@@ -716,7 +851,8 @@
                             </div>
                         </div>
                         <p class="t-step-desc">
-                            Inside the opened folder, locate and open the <strong><code>mods</code></strong> folder. Extract
+                            Inside the opened folder, locate and open the <strong><code>mods</code></strong> folder.
+                            Extract
                             or copy the <code>.jar</code> files from the downloaded <strong>Extra Mods ZIP</strong>
                             directly into this <code>mods</code> folder.
                         </p>
@@ -724,8 +860,8 @@
                         <div class="path-display-box">
                             <div class="path-header">
                                 <span class="path-label">TARGET FOLDER LOCATION</span>
-                                <button type="button" class="btn-copy-path" id="btn-copy-modspath"
-                                    data-copy="mods" title="Copy folder name">Copy</button>
+                                <button type="button" class="btn-copy-path" id="btn-copy-modspath" data-copy="mods"
+                                    title="Copy folder name">Copy</button>
                             </div>
                             <code class="path-text">...\Instances\[Modpack Name]\mods\</code>
                         </div>
@@ -741,7 +877,8 @@
                                 <div class="screenshot-placeholder" style="display:none;">
                                     <span class="placeholder-icon">📥</span>
                                     <span class="placeholder-title">Paste Extra .jar Files into "mods" Folder</span>
-                                    <span class="placeholder-sub">Extract the ZIP and drop the .jar files into mods</span>
+                                    <span class="placeholder-sub">Extract the ZIP and drop the .jar files into
+                                        mods</span>
                                 </div>
                                 <div class="screenshot-overlay">
                                     <span class="zoom-icon">🔍</span>
@@ -784,8 +921,10 @@
                     <div class="tip-content">
                         <h4 class="tip-title">Allocate 4GB - 6GB of RAM</h4>
                         <p class="tip-desc">
-                            Modpacks require more memory than vanilla Minecraft. In your launcher's Java/memory settings,
-                            set RAM allocation to at least <strong>4096 MB (4GB)</strong> or <strong>6144 MB (6GB)</strong>
+                            Modpacks require more memory than vanilla Minecraft. In your launcher's Java/memory
+                            settings,
+                            set RAM allocation to at least <strong>4096 MB (4GB)</strong> or <strong>6144 MB
+                                (6GB)</strong>
                             for optimal 60+ FPS.
                         </p>
                     </div>
@@ -955,42 +1094,74 @@
                 <div class="rule-card">
                     <div class="rule-header">
                         <span class="rule-num">#2</span>
-                        <h3 class="rule-title">Fair Play &bull; No Cheating</h3>
+                        <h3 class="rule-title">Fair Play &bull; No Cheats or "QOL" Exploits</h3>
                     </div>
                     <p class="rule-desc">
-                        X-ray packs, hacked clients, automated cheat scripts, or movement hacks are not allowed. Quality
-                        of
-                        life client mods (OptiFine, Sodium, MiniHUD) are welcome.
+                        X-ray packs, hacked clients, automated cheat scripts, or movement hacks are strictly forbidden.
+                        Additionally, any "QOL" advantages such as <strong>Fullbright</strong> (gamma brightness hacks)
+                        and
+                        <strong>Auto-Fishing</strong> (AFK macros or automated fishing mods) are not allowed. Only pure
+                        client
+                        performance optimization mods (such as Sodium and Iris shaders) included in our official modpack
+                        are permitted.
                     </p>
                 </div>
 
                 <div class="rule-card">
                     <div class="rule-header">
                         <span class="rule-num">#3</span>
-                        <h3 class="rule-title">Respectful Communication</h3>
+                        <h3 class="rule-title">Streamer-Safe &bull; Respectful Chat</h3>
                     </div>
                     <p class="rule-desc">
-                        Treat fellow members with respect. Hate speech, harassment, excessive spam, or toxicity in
-                        global
-                        chat will result in an immediate mute or ban.
+                        Server members will be live streaming and recording gameplay, so please be mindful of what you
+                        say at all times.
+                        There is zero tolerance for <strong>doxxing, sharing private personal info,
+                            racial/discriminatory slurs, hate speech</strong>,
+                        or harassment in text or voice chat. Keep interactions broadcast-safe; violations result in an
+                        immediate ban.
                     </p>
                 </div>
 
                 <div class="rule-card">
                     <div class="rule-header">
                         <span class="rule-num">#4</span>
-                        <h3 class="rule-title">Respect Player Territory</h3>
+                        <h3 class="rule-title">Earn Your Progress &bull; No OP XP Farms</h3>
                     </div>
                     <p class="rule-desc">
-                        Leave reasonable space between your base and your neighbors' land unless mutually agreed upon.
-                        Don't
-                        claim land right next to an existing town uninvited.
+                        Early-game overpowered XP farms and mechanic exploits (such as <strong>Armadillo XP
+                            farms</strong> or glitch setups)
+                        are strictly prohibited. This maintains the equilibrium of strength between players so nobody
+                        speedruns through all progression in an hour or two.
                     </p>
                 </div>
 
                 <div class="rule-card">
                     <div class="rule-header">
                         <span class="rule-num">#5</span>
+                        <h3 class="rule-title">Self-Reliance &bull; What's Yours Is Yours</h3>
+                    </div>
+                    <p class="rule-desc">
+                        What's yours is yours—respect everyone's grind. Please refrain from pestering or begging other
+                        players
+                        for vital materials (diamonds, netherite, gear), even if you only need 1 more diamond.
+                        <strong>Get it yourself bro</strong>!
+                    </p>
+                </div>
+
+                <div class="rule-card">
+                    <div class="rule-header">
+                        <span class="rule-num">#6</span>
+                        <h3 class="rule-title">Respect Player Territory</h3>
+                    </div>
+                    <p class="rule-desc">
+                        Leave reasonable space between your base and your neighbors' land unless mutually agreed upon.
+                        Don't claim land right next to an existing town uninvited.
+                    </p>
+                </div>
+
+                <div class="rule-card">
+                    <div class="rule-header">
+                        <span class="rule-num">#7</span>
                         <h3 class="rule-title">Lag-Conscious Redstone</h3>
                     </div>
                     <p class="rule-desc">
@@ -1001,7 +1172,7 @@
 
                 <div class="rule-card">
                     <div class="rule-header">
-                        <span class="rule-num">#6</span>
+                        <span class="rule-num">#8</span>
                         <h3 class="rule-title">Follow Staff Direction</h3>
                     </div>
                     <p class="rule-desc">
@@ -1038,7 +1209,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="mc-footer">
+    <footer class="mc-footer site-footer">
         <div class="footer-container">
             <p>&copy; <span id="current-year"></span> Mirza Rahimi Bin Zulhan. All rights reserved.</p>
             <p class="footer-disclaimer">
@@ -1061,7 +1232,8 @@
         <div class="modal-dialog">
             <div class="modal-header">
                 <span class="modal-title" id="modal-title">Screenshot Preview</span>
-                <button type="button" class="modal-close-btn" id="modal-close" aria-label="Close screenshot preview">&times;</button>
+                <button type="button" class="modal-close-btn" id="modal-close"
+                    aria-label="Close screenshot preview">&times;</button>
             </div>
             <div class="modal-body">
                 <img id="modal-image" src="" alt="Tutorial screenshot preview" class="modal-img">

@@ -6,6 +6,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     initThemeManager();
     initAudioSynthesizer();
+    initScrollProgress();
+    initSidebarDrawer();
+    initScrollspy();
     initParticleCanvas();
     initClipboardCopy();
     initServerStatusTracker();
@@ -20,15 +23,31 @@ document.addEventListener("DOMContentLoaded", () => {
    ========================================================================== */
 function initThemeManager() {
     const themeToggleBtn = document.getElementById("theme-toggle");
+    const mobileThemeToggleBtn = document.getElementById("mobile-theme-toggle");
     const themeIcon = document.getElementById("theme-icon");
+    const mobileThemeIcon = document.getElementById("mobile-theme-icon");
+    const themeTextLabel = document.getElementById("theme-text-label");
+    const themeBadge = document.getElementById("theme-badge");
     const htmlRoot = document.documentElement;
 
     function applyTheme(theme) {
         htmlRoot.setAttribute("data-theme", theme);
         const isDark = theme === "dark";
+        const iconChar = isDark ? "☀️" : "🌙";
+        const titleStr = isDark ? "Switch to Light Mode" : "Switch to Dark Mode";
+
         if (themeIcon) {
-            themeIcon.textContent = isDark ? "☀️" : "🌙";
-            themeIcon.setAttribute("title", isDark ? "Switch to Light Mode" : "Switch to Dark Mode");
+            themeIcon.textContent = iconChar;
+            themeIcon.setAttribute("title", titleStr);
+        }
+        if (mobileThemeIcon) {
+            mobileThemeIcon.textContent = iconChar;
+        }
+        if (themeTextLabel) {
+            themeTextLabel.textContent = isDark ? "Dark Theme" : "Light Theme";
+        }
+        if (themeBadge) {
+            themeBadge.textContent = isDark ? "Dark" : "Light";
         }
         localStorage.setItem("mr_theme", theme);
     }
@@ -36,16 +55,21 @@ function initThemeManager() {
     const savedTheme = localStorage.getItem("mr_theme") || "dark";
     applyTheme(savedTheme);
 
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener("click", () => {
-            const currentTheme = htmlRoot.getAttribute("data-theme") || "dark";
-            const nextTheme = currentTheme === "dark" ? "light" : "dark";
-            applyTheme(nextTheme);
+    function toggleTheme() {
+        const currentTheme = htmlRoot.getAttribute("data-theme") || "dark";
+        const nextTheme = currentTheme === "dark" ? "light" : "dark";
+        applyTheme(nextTheme);
 
-            if (window.soundFX && window.soundFX.enabled) {
-                window.soundFX.playTone(520, "sine", 0.08);
-            }
-        });
+        if (window.soundFX && window.soundFX.enabled) {
+            window.soundFX.playTone(520, "sine", 0.08);
+        }
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener("click", toggleTheme);
+    }
+    if (mobileThemeToggleBtn) {
+        mobileThemeToggleBtn.addEventListener("click", toggleTheme);
     }
 }
 
@@ -55,6 +79,7 @@ function initThemeManager() {
 function initAudioSynthesizer() {
     const soundToggleBtn = document.getElementById("sound-toggle");
     const soundIcon = document.getElementById("sound-icon");
+    const soundBadge = document.getElementById("sound-badge");
     let audioCtx = null;
 
     const savedSound = localStorage.getItem("mr_sound");
@@ -62,6 +87,7 @@ function initAudioSynthesizer() {
 
     function updateSoundUI(enabled) {
         if (soundIcon) soundIcon.textContent = enabled ? "🔊" : "🔇";
+        if (soundBadge) soundBadge.textContent = enabled ? "On" : "Off";
         if (soundToggleBtn) {
             soundToggleBtn.setAttribute(
                 "title",
@@ -133,6 +159,127 @@ function initAudioSynthesizer() {
             }
         });
     }
+}
+
+/* ==========================================================================
+   2b. Scroll Progress Indicator & Mobile Bar Scrolled State
+   ========================================================================== */
+function initScrollProgress() {
+    const progressBar = document.getElementById("scroll-progress");
+    const mobileTopBar = document.getElementById("mobile-top-bar");
+    if (!progressBar && !mobileTopBar) return;
+
+    function handleScroll() {
+        const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+
+        if (progressBar) {
+            progressBar.style.width = `${scrolled}%`;
+        }
+        if (mobileTopBar) {
+            mobileTopBar.classList.toggle("scrolled", winScroll > 15);
+        }
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+}
+
+/* ==========================================================================
+   2c. Sidebar Mobile Drawer Navigation
+   ========================================================================== */
+function initSidebarDrawer() {
+    const sidebarToggle = document.getElementById("sidebar-toggle");
+    const sidebarCloseBtn = document.getElementById("sidebar-close-btn");
+    const sidebar = document.getElementById("site-sidebar");
+    const backdrop = document.getElementById("sidebar-backdrop");
+    const navLinks = document.querySelectorAll(".site-sidebar .nav-link");
+
+    function openSidebar() {
+        sidebar?.classList.add("open");
+        backdrop?.classList.add("active");
+        sidebarToggle?.classList.add("active");
+        sidebarToggle?.setAttribute("aria-expanded", "true");
+        document.body.classList.add("sidebar-locked");
+        if (window.soundFX && window.soundFX.enabled) {
+            window.soundFX.playTone(540, "sine", 0.08);
+        }
+    }
+
+    function closeSidebar() {
+        sidebar?.classList.remove("open");
+        backdrop?.classList.remove("active");
+        sidebarToggle?.classList.remove("active");
+        sidebarToggle?.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("sidebar-locked");
+        if (window.soundFX && window.soundFX.enabled) {
+            window.soundFX.playTone(420, "sine", 0.06);
+        }
+    }
+
+    sidebarToggle?.addEventListener("click", () => {
+        if (sidebar?.classList.contains("open")) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    });
+
+    sidebarCloseBtn?.addEventListener("click", closeSidebar);
+    backdrop?.addEventListener("click", closeSidebar);
+
+    navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            if (window.innerWidth <= 992) {
+                closeSidebar();
+            }
+        });
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && sidebar?.classList.contains("open")) {
+            closeSidebar();
+        }
+    });
+}
+
+/* ==========================================================================
+   2d. Scrollspy (Active Section Highlighting)
+   ========================================================================== */
+function initScrollspy() {
+    const sectionIds = ["status", "modpack-guide", "how-to-join", "features", "rules"];
+    const sections = sectionIds
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+    const navLinks = document.querySelectorAll(".site-sidebar .nav-link");
+    if (!sections.length || !navLinks.length) return;
+
+    function updateActiveSection() {
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        let activeId = "";
+
+        for (let i = sections.length - 1; i >= 0; i--) {
+            const section = sections[i];
+            const top = section.offsetTop - 140;
+            if (scrollY >= top) {
+                activeId = section.getAttribute("id");
+                break;
+            }
+        }
+
+        navLinks.forEach((link) => {
+            const href = link.getAttribute("href");
+            if (href === `#${activeId}`) {
+                link.classList.add("active");
+            } else {
+                link.classList.remove("active");
+            }
+        });
+    }
+
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    updateActiveSection();
 }
 
 /* ==========================================================================
@@ -342,6 +489,9 @@ function initClipboardCopy() {
 function initServerStatusTracker() {
     const SERVER_ADDRESS = "mija.ddns.net";
 
+    // Sidebar Status Indicator
+    const sidebarStatusIndicator = document.getElementById("sidebar-status-indicator");
+
     // Header Elements
     const headerPill = document.getElementById("header-status-pill");
     const headerDot = document.getElementById("header-dot");
@@ -392,6 +542,12 @@ function initServerStatusTracker() {
                 const motd = data.motd?.clean || "Welcome to Mija's Dedicated Minecraft SMP!";
                 const version = data.version?.name_clean || "Paper 26.3";
 
+                // Update Sidebar Indicator
+                if (sidebarStatusIndicator) {
+                    sidebarStatusIndicator.className = "status-indicator";
+                    sidebarStatusIndicator.title = `Server Online (${onlineCount}/${maxCount} players)`;
+                }
+
                 // Update Header
                 if (headerPill) {
                     headerPill.className = "header-status-pill online";
@@ -407,7 +563,7 @@ function initServerStatusTracker() {
 
                 // Update Diagnostic
                 if (diagDot) diagDot.className = "indicator online";
-                if (diagStatusText) diagStatusText.textContent = "Online & Operational";
+                if (diagStatusText) diagStatusText.textContent = "Online";
                 if (diagPlayerFraction) diagPlayerFraction.textContent = `${onlineCount} / ${maxCount}`;
                 if (diagVersionText) diagVersionText.textContent = version;
                 if (capacityPercentage) capacityPercentage.textContent = `${percentage}% Capacity`;
@@ -420,6 +576,11 @@ function initServerStatusTracker() {
                 renderPlayerRoster(data.players.list || [], onlineCount);
             } else {
                 // Server Offline
+                if (sidebarStatusIndicator) {
+                    sidebarStatusIndicator.className = "status-indicator offline";
+                    sidebarStatusIndicator.title = "Server Offline";
+                }
+
                 if (headerPill) headerPill.className = "header-status-pill offline";
                 if (headerStatusText) headerStatusText.textContent = "Offline";
                 if (headerPlayerCount) headerPlayerCount.textContent = "";
@@ -441,6 +602,10 @@ function initServerStatusTracker() {
             }
         } catch (err) {
             console.error("Status fetch error:", err);
+            if (sidebarStatusIndicator) {
+                sidebarStatusIndicator.className = "status-indicator offline";
+                sidebarStatusIndicator.title = "Connection Error";
+            }
             if (headerPill) headerPill.className = "header-status-pill offline";
             if (headerStatusText) headerStatusText.textContent = "Error";
             if (heroDot) heroDot.className = "indicator offline";
